@@ -1,0 +1,23 @@
+# Subnets
+data "azurerm_subnet" "subnet" {
+  resource_group_name  = "eis-devtest-int-southwest-network-rg"
+  name                 = "N800-Subnet-01"
+  virtual_network_name = "EIS-DEVTEST-SOUTHWEST"
+}
+
+data "azurerm_subnet" "sql-subnet" {
+  resource_group_name  = "eis-devtest-int-southwest-network-rg"
+  name                 = "N54CA-Subnet-04"
+  virtual_network_name = "EIS-DEVTEST-SOUTHWEST"
+}
+
+data "azurerm_subnet" "appgw-subnet" {
+  resource_group_name  = "eis-devtest-int-southwest-network-rg"
+  name                 = "N709-SUBNET-01"
+  virtual_network_name = "EIS-DEVTEST-SOUTHWEST"
+}
+#IP
+data "azurerm_public_ip" "appgw-pip" {
+  name                = "EIS-SOUTHWEST-PIP0"
+  resource_group_name = "EIS-INT-SOUTHWEST-RG"
+}

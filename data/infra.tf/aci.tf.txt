@@ -1,0 +1,37 @@
+
+resource "azurerm_container_group" "aci" {
+  name                = "sonarqube-aci"
+  resource_group_name = azurerm_resource_group.sonarqube.name
+  location            = local.location
+  ip_address_type     = "Private"
+  # dns_name_label = "sonar-vs"
+  os_type        = "Linux"
+  restart_policy = "Always"
+  subnet_ids     = [data.azurerm_subnet.subnet.id]
+  tags           = local.devtesttags
+
+  exposed_port = [
+    {
+      port     = 9000
+      protocol = "TCP"
+    }
+  ]
+
+  container {
+    name   = "sonarqube-container"
+    image  = "sonarqube:community"
+    cpu    = 2
+    memory = 4
+
+    ports {
+      port     = 9000
+      protocol = "TCP"
+    }
+    environment_variables = {
+      SONAR_JDBC_URL                    = "jdbc:sqlserver://${azurerm_mssql_server.db-server.fully_qualified_domain_name}:1433;database=${azurerm_mssql_database.db.name};user=${azurerm_mssql_server.db-server.administrator_login}@${azurerm_mssql_server.db-server.name};password=${azurerm_mssql_server.db-server.administrator_login_password};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.net;loginTimeout=30;"
+      SONAR_JDBC_USERNAME               = azurerm_mssql_server.db-server.administrator_login
+      SONAR_JDBC_PASSWORD               = azurerm_mssql_server.db-server.administrator_login_password
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE = "true"
+    }
+  }
+}

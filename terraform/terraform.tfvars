@@ -1,0 +1,6 @@
+resource_group_name = "devops-openai-rg"
+location            = "westus"
+openai_name         = "devops-openai"
+openai_subdomain    = "devops-openai-custom"
+apim_name           = "devops-apim"
+search_name         = "devops-search"
