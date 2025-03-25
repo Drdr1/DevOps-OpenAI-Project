@@ -1,0 +1,46 @@
+resource "azurerm_service_plan" "sonar" {
+  name                   = "eis-devtest-int-southwest-sonarqube-asp"
+  resource_group_name    = azurerm_resource_group.sonarqube.name
+  location               = azurerm_resource_group.sonarqube.location
+  os_type                = "Linux"
+  sku_name               = "P1v3"
+  worker_count           = 2
+  zone_balancing_enabled = true
+  tags                   = local.devtesttags
+}
+
+/* resource "azurerm_linux_web_app" "sonar" {
+  name                = "eis-devtest-int-southwest-sonarqube-app"
+  resource_group_name = azurerm_resource_group.sonarqube.name
+  location            = azurerm_resource_group.sonarqube.location
+  service_plan_id     = azurerm_service_plan.sonar.id
+  #service_plan_id                                = data.azurerm_service_plan.linux.id
+  https_only                                     = true
+  public_network_access_enabled                  = false
+  ftp_publish_basic_authentication_enabled       = false
+  webdeploy_publish_basic_authentication_enabled = false
+  virtual_network_subnet_id                      = data.azurerm_subnet.app-subnet.id
+  tags                                           = local.devtesttags
+
+  connection_string {
+    name  = "SQL"
+    type  = "SQLAzure"
+    value = "jdbc:sqlserver://${azurerm_mssql_server.db-server.fully_qualified_domain_name}:1433;database=${azurerm_mssql_database.db.name};user=${azurerm_mssql_server.db-server.administrator_login}@${azurerm_mssql_server.db-server.name};password=${azurerm_mssql_server.db-server.administrator_login_password};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.usgovcloudapi.net;loginTimeout=30;"
+  }
+
+  site_config {
+    application_stack {
+      docker_image_name   = "sonarqube:community"
+      docker_registry_url = "https://index.docker.io/v1"
+    }
+  }
+
+  app_settings = {
+    SONAR_JDBC_URL                      = "jdbc:sqlserver://${azurerm_mssql_server.db-server.fully_qualified_domain_name}:1433;database=${azurerm_mssql_database.db.name};user=${azurerm_mssql_server.db-server.administrator_login}@${azurerm_mssql_server.db-server.name};password=${azurerm_mssql_server.db-server.administrator_login_password};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.usgovcloudapi.net;loginTimeout=30;"
+    SONAR_JDBC_USERNAME                 = azurerm_mssql_server.db-server.administrator_login
+    SONAR_JDBC_PASSWORD                 = azurerm_mssql_server.db-server.administrator_login_password
+    SONAR_ES_BOOTSTRAP_CHECKS_DISABLE   = "true"
+    WEBSITES_ENABLE_APP_SERVICE_STORAGE = "false"
+    DOCKER_ENABLE_CI                    = "true"
+  }
+} */

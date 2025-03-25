@@ -1,0 +1,23 @@
+terraform {
+  required_version = "~> 1"
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 4"
+    }
+  }
+  backend "azurerm" {
+    resource_group_name  = "EIS-PROD-INT-EAST-Terraform-RG"
+    storage_account_name = "eisprodinteasttfstate"
+    container_name       = "devtest"
+    key                  = "sonarqube.terraform.tfstate"
+    subscription_id      = "c0eb1fa5-****-****-****-********a1c9"
+    tenant_id            = "f7c49e36-****-****-****-********0bf6"
+  }
+}
+
+provider "azurerm" {
+  resource_provider_registrations = "all" #none
+  features {}
+  subscription_id = "c0eb1fa5-****-****-****-********a1c9"
+}
