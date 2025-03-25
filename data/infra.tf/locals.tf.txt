@@ -1,9 +1,0 @@
-locals {
-  
-  devtesttags = {
-    CKID           = "195"
-    Environment    = "DEVTEST"
-    ProjectName    = "SQ Integration Solution"
-  
-  }
-}

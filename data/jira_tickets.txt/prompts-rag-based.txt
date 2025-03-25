@@ -1,7 +1,0 @@
-what is the min_tls_version used for the storage accounts?
-
-what is the name of the sonarqube resource group and its location?
-
-what firewall rules are applied?
-
-what is the version and login details for the sql server database used in sonarqube project?

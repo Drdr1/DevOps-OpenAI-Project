@@ -1,4 +1,0 @@
-resource "azurerm_resource_group" "sonarqube" {
-  name     = "EIS-DEVTEST-SONARQUBE-RG"
-  tags     = local.devtesttags
-}
